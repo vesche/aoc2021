@@ -9,16 +9,15 @@ fn part1() !i32 {
     var iterate = std.mem.tokenize(input, "\n");
     while (iterate.next()) |line| {
         var tokenizeLine = std.mem.tokenize(line, " ");
-        while (tokenizeLine.next()) |direction| {
-            var foo = tokenizeLine.next() orelse "0";
-            const amount = try std.fmt.parseInt(i32, foo, 10);
-            if (equal(u8, direction, "up")) {
-                depth -= amount;
-            } else if (equal(u8, direction, "down")) {
-                depth += amount;
-            } else if (equal(u8, direction, "forward")) {
-                horizontal += amount;
-            }
+        var direction = tokenizeLine.next() orelse "";
+        var amountStr = tokenizeLine.next() orelse "";
+        const amount = try std.fmt.parseInt(i32, amountStr, 10);
+        if (equal(u8, direction, "up")) {
+            depth -= amount;
+        } else if (equal(u8, direction, "down")) {
+            depth += amount;
+        } else if (equal(u8, direction, "forward")) {
+            horizontal += amount;
         }
     }
     return horizontal*depth;
@@ -31,17 +30,16 @@ fn part2() !i32 {
     var iterate = std.mem.tokenize(input, "\n");
     while (iterate.next()) |line| {
         var tokenizeLine = std.mem.tokenize(line, " ");
-        while (tokenizeLine.next()) |direction| {
-            var foo = tokenizeLine.next() orelse "0";
-            const amount = try std.fmt.parseInt(i32, foo, 10);
-            if (equal(u8, direction, "up")) {
-                aim -= amount;
-            } else if (equal(u8, direction, "down")) {
-                aim += amount;
-            } else if (equal(u8, direction, "forward")) {
-                horizontal += amount;
-                depth += aim * amount;
-            }
+        var direction = tokenizeLine.next() orelse "";
+        var amountStr = tokenizeLine.next() orelse "";
+        const amount = try std.fmt.parseInt(i32, amountStr, 10);
+        if (equal(u8, direction, "up")) {
+            aim -= amount;
+        } else if (equal(u8, direction, "down")) {
+            aim += amount;
+        } else if (equal(u8, direction, "forward")) {
+            horizontal += amount;
+            depth += aim * amount;
         }
     }
     return horizontal*depth;
