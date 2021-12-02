@@ -3,49 +3,31 @@ const print = std.debug.print;
 const equal = std.mem.eql;
 const input = @embedFile("inputs/day02.txt");
 
-fn part1() !i32 {
-    var horizontal: i32 = 0;
-    var depth: i32 = 0;
-    var iterate = std.mem.tokenize(input, "\n");
-    while (iterate.next()) |line| {
-        var tokenizeLine = std.mem.tokenize(line, " ");
-        var direction = tokenizeLine.next() orelse "";
-        var amountStr = tokenizeLine.next() orelse "";
-        const amount = try std.fmt.parseInt(i32, amountStr, 10);
-        if (equal(u8, direction, "up")) {
-            depth -= amount;
-        } else if (equal(u8, direction, "down")) {
-            depth += amount;
-        } else if (equal(u8, direction, "forward")) {
-            horizontal += amount;
-        }
-    }
-    return horizontal*depth;
-}
-
-fn part2() !i32 {
+pub fn main() !void {
     var horizontal: i32 = 0;
     var depth: i32 = 0;
     var aim: i32 = 0;
+    var horizontal_p2: i32 = 0;
+    var depth_p2: i32 = 0;
+
     var iterate = std.mem.tokenize(input, "\n");
     while (iterate.next()) |line| {
         var tokenizeLine = std.mem.tokenize(line, " ");
-        var direction = tokenizeLine.next() orelse "";
-        var amountStr = tokenizeLine.next() orelse "";
-        const amount = try std.fmt.parseInt(i32, amountStr, 10);
+        const direction = tokenizeLine.next().?;
+        const amount = try std.fmt.parseInt(i32, tokenizeLine.rest(), 10);
         if (equal(u8, direction, "up")) {
+            depth -= amount;
             aim -= amount;
         } else if (equal(u8, direction, "down")) {
+            depth += amount;
             aim += amount;
         } else if (equal(u8, direction, "forward")) {
             horizontal += amount;
-            depth += aim * amount;
+            horizontal_p2 += amount;
+            depth_p2 += aim * amount;
         }
     }
-    return horizontal*depth;
-}
 
-pub fn main() !void {
-    print("{d}\n", .{part1()});
-    print("{d}\n", .{part2()});
+    print("part 1: {d}\n", .{horizontal*depth});
+    print("part 2: {d}\n", .{horizontal_p2*depth_p2});
 }

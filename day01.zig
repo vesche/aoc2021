@@ -38,6 +38,6 @@ fn part2() !i32 {
 }
 
 pub fn main() !void {
-    print("{d}\n", .{part1()});
-    print("{d}\n", .{part2()});
+    print("part 1: {d}\n", .{part1()});
+    print("part 2: {d}\n", .{part2()});
 }
